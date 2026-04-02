@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Trade {
+  id String @id @default(uuid())
+  source String
+  filingDate DateTime
+  ticker String
+  insiderName String
+  insiderTitle String
+  tradeType String // Buy / Sell
+  price Float
+  qtySold Int
+  qtyOwned Int
+  ownChange Float
+  value Float
+  @@unique([source, filingDate, ticker, insiderName])
+  @@map("trades_canonical")
+}
